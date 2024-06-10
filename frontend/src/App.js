@@ -30,7 +30,8 @@ const App = () => {
                         )}
                     </Route>
                     <Route path="/">
-                        <h1>Welcome to the Movie Reservation System</h1>
+                        <h1>Welcome to MTheatres</h1>
+                        <h2>your only in one platform for enjoy your movies</h2>
                     </Route>
                 </Switch>
             </div>
