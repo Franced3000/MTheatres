@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './components/Login';
 import MovieSearch from './components/MovieSearch';
 import SeatSelection from './components/SeatSelection';
@@ -12,28 +12,34 @@ const App = () => {
     return (
         <Router>
             <div>
-                <Switch>
-                    <Route path="/login">
-                        <Login />
-                    </Route>
-                    <Route path="/search">
-                        <MovieSearch setSelectedMovie={setSelectedMovie} />
-                    </Route>
-                    <Route path="/select-seat">
-                        {selectedMovie && selectedTheater && (
-                            <SeatSelection
-                                movie={selectedMovie}
-                                theater={selectedTheater}
-                                user={{ id: 1 }} // Replace with actual user data from auth
-                                setBooking={setBooking}
-                            />
-                        )}
-                    </Route>
-                    <Route path="/">
-                        <h1>Welcome to MTheatres</h1>
-                        <h2>your only in one platform for enjoy your movies</h2>
-                    </Route>
-                </Switch>
+                <Routes>
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/search" element={<MovieSearch setSelectedMovie={setSelectedMovie} />} />
+                    <Route 
+                        path="/select-seat" 
+                        element={
+                            selectedMovie && selectedTheater ? (
+                                <SeatSelection
+                                    movie={selectedMovie}
+                                    theater={selectedTheater}
+                                    user={{ id: 1 }} // Replace with actual user data from auth
+                                    setBooking={setBooking}
+                                />
+                            ) : (
+                                <div>Please select a movie and theater first.</div>
+                            )
+                        } 
+                    />
+                    <Route 
+                        path="/" 
+                        element={
+                            <div>
+                                <h1>Welcome to MTheatres</h1>
+                                <h2>Your all-in-one platform to enjoy movies</h2>
+                            </div>
+                        } 
+                    />
+                </Routes>
             </div>
         </Router>
     );
