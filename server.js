@@ -7,6 +7,7 @@ const app = express();
 app.use(express.json());
 
 // Import routes
+const moviesRouter = require('./routes/movies');
 const authRoutes = require('./routes/auth');
 const reservationRoutes = require('./routes/reservations');
 const paymentRoutes = require('./routes/payments');
