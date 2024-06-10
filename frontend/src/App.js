@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Login from './components/Login';
 import MovieSearch from './components/MovieSearch';
 import SeatSelection from './components/SeatSelection';
+import MovieDetails from './components/MovieDetails';
 
 const App = () => {
     const [selectedMovie, setSelectedMovie] = useState(null);
@@ -30,6 +31,7 @@ const App = () => {
                             )
                         } 
                     />
+                    <Route path="/details/:id" element={<MovieDetails movie={selectedMovie} />} />
                     <Route 
                         path="/" 
                         element={
@@ -46,3 +48,4 @@ const App = () => {
 };
 
 export default App;
+

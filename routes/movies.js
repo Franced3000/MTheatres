@@ -1,7 +1,7 @@
 const express = require('express');
 const { MovieDb } = require('moviedb-promise');
 const dotenv = require('dotenv');
-const { getStreamingDetails } = require('../utils/streams');
+const { getStreamingDetails } = require('./streams');
 
 dotenv.config();
 
