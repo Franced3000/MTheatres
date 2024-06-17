@@ -1,5 +1,5 @@
 ###frontend directory
-frontend/
+/frontend/
 
 ### dotenv ###
 .env
