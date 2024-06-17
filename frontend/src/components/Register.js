@@ -1,21 +1,27 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
-    const [name, setName] = useState('');
+    const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate(); 
 
     const handleRegister = async () => {
         try {
-            const response = await fetch('http://localhost:3000/register', { // Cambia l'URL se necessario
+            const response = await fetch('http://localhost:5000/auth/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ name, email, password }),
+                body: JSON.stringify({ username, email, password }),
             });
+            if (!response.ok) {
+                throw new Error('Registration failed');
+            }
             const data = await response.json();
             console.log('User registered:', data);
+            navigate.push('/login');
         } catch (error) {
             console.error('Error registering user:', error);
         }
@@ -26,9 +32,9 @@ const Register = () => {
             <h1>Register</h1>
             <input
                 type="text"
-                placeholder="Name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                placeholder="Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
             />
             <input
                 type="email"
