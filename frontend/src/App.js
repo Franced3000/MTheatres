@@ -9,13 +9,14 @@ const App = () => {
     const [selectedMovie, setSelectedMovie] = useState(null);
     const [selectedTheater, setSelectedTheater] = useState(null); // Assuming you have a way to select a theater
     const [booking, setBooking] = useState(null);
+    const [authToken, setAuthToken] = useState('');
 
     return (
         <Router>
             <div>
                 <Routes>
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/search" element={<MovieSearch setSelectedMovie={setSelectedMovie} />} />
+                    <Route path="/login" element={<Login setAuthToken={setAuthToken} />} />
+                    <Route path="/search" element={<MovieSearch setSelectedMovie={setSelectedMovie} authToken={authToken} />} />
                     <Route 
                         path="/select-seat" 
                         element={
@@ -25,13 +26,14 @@ const App = () => {
                                     theater={selectedTheater}
                                     user={{ id: 1 }} // Replace with actual user data from auth
                                     setBooking={setBooking}
+                                    authToken={authToken}
                                 />
                             ) : (
                                 <div>Please select a movie and theater first.</div>
                             )
                         } 
                     />
-                    <Route path="/details/:id" element={<MovieDetails movie={selectedMovie} />} />
+                    <Route path="/details/:id" element={<MovieDetails movie={selectedMovie} authToken={authToken} />} />
                     <Route 
                         path="/" 
                         element={

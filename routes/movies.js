@@ -2,6 +2,7 @@ const express = require('express');
 const { MovieDb } = require('moviedb-promise');
 const dotenv = require('dotenv');
 const { getStreamingDetails } = require('./streams');
+const authMiddleware = require('../middleware/authMiddleware');
 
 dotenv.config();
 
@@ -9,13 +10,13 @@ const router = express.Router();
 const moviedb = new MovieDb(process.env.MOVIE_DB);
 
 // Route to search for movies by title
-router.get('/search', async (req, res) => {
+router.get('/search', authMiddleware, async (req, res) => {
     const { query } = req.query;
     try {
         const response = await moviedb.searchMovie({ query });
 
         const movieDetailsWithStreaming = await Promise.all(response.results.map(async (movie) => {
-            const imdbId = movie.imdb_id || movie.id; // Usa l'ID IMDB se disponibile, altrimenti l'ID del film
+            const imdbId = movie.imdb_id || movie.id; // Use IMDb ID if available, otherwise use movie ID
             const streamingDetails = await getStreamingDetails(imdbId);
             return {
                 ...movie,
@@ -31,12 +32,12 @@ router.get('/search', async (req, res) => {
 });
 
 // Route to get movie details by ID
-router.get('/details/:id', async (req, res) => {
+router.get('/details/:id', authMiddleware, async (req, res) => {
     const { id } = req.params;
     try {
         const response = await moviedb.movieInfo({ id });
 
-        const imdbId = response.imdb_id || id; // Usa l'ID IMDB se disponibile, altrimenti l'ID del film
+        const imdbId = response.imdb_id || id; // Use IMDb ID if available, otherwise use movie ID
         const streamingDetails = await getStreamingDetails(imdbId);
 
         const movieWithStreaming = {
@@ -52,3 +53,4 @@ router.get('/details/:id', async (req, res) => {
 });
 
 module.exports = router;
+

@@ -2,13 +2,17 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import MovieSearchResults from './MovieSearchResults';
 
-const MovieSearch = () => {
+const MovieSearch = ({ setSelectedMovie, authToken }) => {
     const [query, setQuery] = useState('');
     const [movies, setMovies] = useState([]);
 
     const handleSearch = async () => {
         try {
-            const response = await axios.get(`/movies/search?query=${query}`);
+            const response = await axios.get(`http://localhost:5000/movies/search?query=${query}`, {
+                headers: {
+                    Authorization: `Bearer ${authToken}`
+                }
+            });
             setMovies(response.data);
         } catch (error) {
             console.error('Error fetching movies:', error);

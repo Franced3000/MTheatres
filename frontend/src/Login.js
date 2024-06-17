@@ -6,7 +6,7 @@ const Login = ({ setAuthToken }) => {
 
     const handleLogin = async () => {
         try {
-            const response = await fetch('http://localhost:3000/login', { // Cambia l'URL se necessario
+            const response = await fetch('http://localhost:5000/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -25,7 +25,7 @@ const Login = ({ setAuthToken }) => {
         <div>
             <h1>Login</h1>
             <input
-                type="email"
+                type="text"
                 placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -42,3 +42,4 @@ const Login = ({ setAuthToken }) => {
 };
 
 export default Login;
+
